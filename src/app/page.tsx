@@ -1,17 +1,18 @@
 // app/page.tsx
-import { createClient } from '@/utils/supabase/server'
 import { signOut } from '@/utils/actions'
+import { cookies } from 'next/headers'
 import { Button } from '@/components/ui/button'
 
 export default async function Home() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
 
+  const cookieStore = await cookies()
+  const userData = cookieStore.get('user-data')
 
+  const user = userData ? JSON.parse(userData.value) : null
 
   return (
     <div>
-      <h1>Welcome, {user?.email}</h1>
+      <h1>Welcome, {user.name}</h1>
       <form action={signOut}>
         <Button variant='elevated' type="submit">Sign Out</Button>
       </form>
