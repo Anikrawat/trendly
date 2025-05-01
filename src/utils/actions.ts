@@ -1,6 +1,7 @@
 'use server'
 import { redirect } from "next/navigation"
 import { createClient } from "./supabase/server"
+import { cookies } from 'next/headers'
 
 const signIn = async () => {
   const supabase = await createClient()
@@ -22,8 +23,11 @@ const signIn = async () => {
 }
 
 const signOut = async () => {
+  const cookieStore = await cookies()
   const supabase = await createClient()
   await supabase.auth.signOut()
+
+  cookieStore.delete('user-data')
 }
 
 export { signIn, signOut }

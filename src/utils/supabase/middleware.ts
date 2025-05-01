@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { cookies } from 'next/headers'
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -33,19 +34,18 @@ export async function updateSession(request: NextRequest) {
 
   // IMPORTANT: DO NOT REMOVE auth.getUser()
 
-  // const {
-  //   data: { user },
-  // } = await supabase.auth.getUser()
-  //
-  // if (
-  //   !user &&
-  //   !request.nextUrl.pathname.startsWith('/login')
-  // ) {
-  //   // no user, potentially respond by redirecting the user to the login page
-  //   const url = request.nextUrl.clone()
-  //   url.pathname = '/login'
-  //   return NextResponse.redirect(url)
-  // }
+  const cookieStore = await cookies()
+  const user = cookieStore.get('user-data')
+
+  if (
+    user &&
+    request.nextUrl.pathname.startsWith('/login')
+  ) {
+    // no user, potentially respond by redirecting the user to the login page
+    const url = request.nextUrl.clone()
+    url.pathname = '/'
+    return NextResponse.redirect(url)
+  }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is.
   // If you're creating a new response object with NextResponse.next() make sure to:

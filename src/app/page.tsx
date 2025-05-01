@@ -1,7 +1,7 @@
 // app/page.tsx
 import { signOut } from '@/utils/actions'
-import { cookies } from 'next/headers'
 import { Button } from '@/components/ui/button'
+import { cookies } from 'next/headers'
 
 export default async function Home() {
 
@@ -12,7 +12,7 @@ export default async function Home() {
 
   return (
     <div>
-      <h1>Welcome, {user.name}</h1>
+      <h1>Welcome, {user.full_name}</h1>
       <form action={signOut}>
         <Button variant='elevated' type="submit">Sign Out</Button>
       </form>

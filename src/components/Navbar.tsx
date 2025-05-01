@@ -68,7 +68,7 @@ const Navbar = () => {
       </div>
 
       <div className='w-full h-full flex justify-center items-center gap-4'>
-        <div className='w-[15vw] h-fit hidden lg:flex items-center bg-gray-100'>
+        <div className='w-[15vw] h-fit hidden lg:flex items-center'>
           <Input type='text' placeholder='What are looking for?' className={cn(' outline-none focus:outline-none placeholder:text-gray-400 placeholder:text-sm flex-1 border-1')} />
           <Search className='mx-1' />
         </div>

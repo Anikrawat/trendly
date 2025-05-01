@@ -17,10 +17,7 @@ export async function GET(request: Request) {
       const forwardedHost = request.headers.get('x-forwarded-host') // original origin before load balancer
       const isLocalEnv = process.env.NODE_ENV === 'development'
       if (isLocalEnv) {
-        const userInfo = {
-          email: data.session.user.user_metadata.email,
-          name: data.session.user.user_metadata.full_name
-        }
+        const userInfo = data.session.user.user_metadata
 
         cookieStore.set("user-data", JSON.stringify(userInfo), {
           path: '/',
