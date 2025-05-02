@@ -7,12 +7,13 @@ export default async function Home() {
 
   const cookieStore = await cookies()
   const userData = cookieStore.get('user-data')
+  console.log(userData)
 
-  const user = userData ? JSON.parse(userData.value) : null
+  const user = userData && userData.value?.trim() ? JSON.parse(userData.value) : null
 
   return (
     <div>
-      <h1>Welcome, {user.full_name}</h1>
+      <h1>Welcome, {user ? user.full_name : "User"}</h1>
       <form action={signOut}>
         <Button variant='elevated' type="submit">Sign Out</Button>
       </form>

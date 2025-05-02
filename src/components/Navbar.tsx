@@ -16,6 +16,45 @@ import { User } from '@supabase/supabase-js'
 import { createClient } from '@/utils/supabase/client'
 import { usePathname } from 'next/navigation'
 import NavbarSidebar from './NavbarSidebar'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { LogOut } from 'lucide-react';
+
+
+const DropDown = ({ user }: { user: User }) => {
+  return (
+    <div>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Avatar className='cursor-pointer'>
+            <AvatarImage src={user.user_metadata.avatar_url} alt="@shadcn" />
+            <AvatarFallback>AR</AvatarFallback>
+          </Avatar>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className='bg-[#f8d6b3] border-2'>
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <UserRound className='text-black' />
+            <p>Profile</p>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <LogOut className='text-black' />
+            <p>Sign Out</p>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  )
+
+}
+
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(null)
@@ -81,11 +120,8 @@ const Navbar = () => {
         <Link href={'/shopping-cart'}>
           <ShoppingCart />
         </Link>
-        <div className='lg:flex hidden'>
-          {user ? <Avatar>
-            <AvatarImage src={user.user_metadata.avatar_url} alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar> : <UserRound />}
+        <div>
+          {user ? <DropDown user={user} /> : <UserRound />}
         </div>
         <div className='lg:hidden flex' onClick={() => setIsSideBarOpen(true)}>
           <MenuIcon />
